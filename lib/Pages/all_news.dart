@@ -25,10 +25,8 @@ class _AllNewsState extends State<AllNews> {
     await newsclass.getNews();
     articles = newsclass.news;
     setState(() {
-
     });
   }
-
 
 
   @override
@@ -36,7 +34,7 @@ class _AllNewsState extends State<AllNews> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "ब्रेकिंग न्यूज़!",
+          "लेटेस्ट न्यूज़!",
           style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,

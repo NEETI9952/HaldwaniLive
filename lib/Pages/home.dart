@@ -104,7 +104,7 @@ class _HomeState extends State<Home> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "ब्रेकिंग न्यूज़!",//ब्रेकिंग न्यूज़ · समाचार तोड़ · ताज़ा ख़बर
+                      "लेटेस्ट न्यूज़!",//ब्रेकिंग न्यूज़ · समाचार तोड़ · ताज़ा ख़बर
                       style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
