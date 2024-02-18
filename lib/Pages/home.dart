@@ -52,12 +52,21 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Row(
+        leading: SizedBox(
+          height: 40, // Adjust the height as needed
+          width: 40, // Adjust the width as needed
+          child: Image.asset(
+            "images/logo.jpg", // Replace 'your_image.png' with your actual image path
+            fit: BoxFit.contain, // Ensure the image fits within the constraints
+          ),
+        ),
+        title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("Haldwani"),
+            Text("हल्द्वानी",
+              style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),//खबर
             Text(
-              "Live",
+              "लाइव",
               style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
             )
           ],
@@ -66,7 +75,7 @@ class _HomeState extends State<Home> {
         elevation: 0.0,
       ),
       body: _loading3
-          ? const Center(child: CircularProgressIndicator())
+          ? Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
         child: Container(
           child: Column(
@@ -76,75 +85,79 @@ class _HomeState extends State<Home> {
                 margin: EdgeInsets.only(left: 10.0),
                 height: 80,
                 child: ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: categories.length,
-                    itemBuilder: (context, index) {
-                      return CategoryTile(
-                        image: categories[index].image,
-                        categoryName: categories[index].categoryName,
-                        id: categories[index].id,
-                      );
-                    }),
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  itemCount: categories.length,
+                  itemBuilder: (context, index) {
+                    return CategoryTile(
+                      image: categories[index].image,
+                      categoryName: categories[index].categoryName,
+                      id: categories[index].id,
+                    );
+                  },
+                ),
               ),
-              const SizedBox(
-                height: 30.0,
-              ),
-              // // Center(child: buildIndicator()),--dot progress bar
-              // const SizedBox(
-              //   height: 30.0,
-              // ),
+              SizedBox(height: 30.0),
               Padding(
-                padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      "Trending News!",
+                    Text(
+                      "ब्रेकिंग न्यूज़!",//ब्रेकिंग न्यूज़ · समाचार तोड़ · ताज़ा ख़बर
                       style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18.0,
-                          fontFamily: 'Pacifico'),
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18.0,
+                        fontFamily: 'Pacifico',
+                      ),
                     ),
                     GestureDetector(
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=> AllNews(news: "Trending")));
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AllNews(news: "Trending"),
+                          ),
+                        );
                       },
-                      child: const Text(
+                      child: Text(
                         "View All",
                         style: TextStyle(
-                            decoration: TextDecoration.underline,
-                            decorationColor: Colors.blue,
-                            color: Colors.blue,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14.0),
+                          decoration: TextDecoration.underline,
+                          decorationColor: Colors.blue,
+                          color: Colors.blue,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14.0,
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 10.0,
-              ),
-              _loading? const Center(child: CircularProgressIndicator()):Container(
+              SizedBox(height: 10.0),
+              _loading
+                  ? Center(child: CircularProgressIndicator())
+                  : Container(
                 child: ListView.builder(
-                    shrinkWrap: true,
-                    physics: ClampingScrollPhysics(),
-                    itemCount: articles.length,
-                    itemBuilder: (context, index) {
-                      return BlogTile(
-                          url:  articles[index].link!,
-                          desc: Html(
-                            data: articles[index].description!
-                                .split(' ')
-                                .take(10)
-                                .join(' '),
-                          ),
-                          imageUrl: articles[index].urlToImage!,
-                          title: articles[index].title!);
-                    }),
-              )
+                  shrinkWrap: true,
+                  physics: ClampingScrollPhysics(),
+                  itemCount: articles.length,
+                  itemBuilder: (context, index) {
+                    return BlogTile(
+                      url: articles[index].link!,
+                      desc: Html(
+                        data: articles[index].description!
+                            .split(' ')
+                            .take(10)
+                            .join(' '),
+                      ),
+                      imageUrl: articles[index].urlToImage!,
+                      title: articles[index].title!,
+                    );
+                  },
+                ),
+              ),
             ],
           ),
         ),
@@ -276,8 +289,4 @@ class BlogTile extends StatelessWidget {
       ),
     );
   }
-
 }
-
-
-

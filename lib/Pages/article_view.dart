@@ -17,9 +17,10 @@ class _ArticleViewState extends State<ArticleView> {
           title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Haldwani"),
+              Text("हल्द्वानी",
+                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),//खबर
               Text(
-                "Live",
+                "लाइव",
                 style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
               )
             ],

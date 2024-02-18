@@ -30,17 +30,13 @@ class _AllNewsState extends State<AllNews> {
   }
 
 
-  String removeHtmlTags(String htmlText) {
-    RegExp exp = RegExp(r"<[^>]*>", multiLine: true, caseSensitive: true);
-    return htmlText.replaceAll(exp, '');
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          widget.news + " News",
+          "ब्रेकिंग न्यूज़!",
           style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,

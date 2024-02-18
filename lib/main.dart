@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:haldwani_live/Pages/home.dart';
+import 'package:haldwani_live/Pages/landing_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: Home(),
+      home: LandingPage(),
     );
   }
 }

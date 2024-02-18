@@ -24,10 +24,6 @@ class CategoryTypes{
             categoryName: element["name"]);
         categories.add(category);
       }
-
     });
-
   }
-
-
 }
