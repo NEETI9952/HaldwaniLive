@@ -79,12 +79,13 @@ class AllNewsSection extends StatelessWidget {
         required this.title,
         required this.url});
 
-  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => ArticleView(blogUrl: url)));
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ArticleView(blogUrl: url)),
+        );
       },
       child: Container(
         child: Column(
@@ -96,6 +97,11 @@ class AllNewsSection extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 height: 200,
                 fit: BoxFit.cover,
+                errorWidget: (context, url, error) => Container(
+                  color: Color.fromRGBO(160, 160, 160, 1.0),  // light grey box as placeholder
+                  width: MediaQuery.of(context).size.width,
+                  height: 200,
+                ),
               ),
             ),
             const SizedBox(
@@ -105,9 +111,10 @@ class AllNewsSection extends StatelessWidget {
               title,
               maxLines: 2,
               style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold),
+                color: Colors.black,
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             desc, // Display the description directly as a Widget
             const SizedBox(
@@ -118,4 +125,5 @@ class AllNewsSection extends StatelessWidget {
       ),
     );
   }
+
 }

@@ -75,8 +75,11 @@ class ShowCategory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> ArticleView(blogUrl: url)));
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ArticleView(blogUrl: url)),
+        );
       },
       child: Container(
         child: Column(
@@ -88,6 +91,11 @@ class ShowCategory extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 height: 200,
                 fit: BoxFit.cover,
+                errorWidget: (context, url, error) => Container(
+                  color: Color.fromRGBO(160, 160, 160, 1.0),  // light grey box as placeholder
+                  width: MediaQuery.of(context).size.width,
+                  height: 200,
+                ),
               ),
             ),
             SizedBox(
@@ -97,15 +105,19 @@ class ShowCategory extends StatelessWidget {
               title,
               maxLines: 2,
               style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold),
+                color: Colors.black,
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             desc,
-            SizedBox(height: 20.0,),
+            SizedBox(
+              height: 20.0,
+            ),
           ],
         ),
       ),
     );
   }
+
 }
