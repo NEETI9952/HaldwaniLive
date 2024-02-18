@@ -66,7 +66,7 @@ class _HomeState extends State<Home> {
             Text("हल्द्वानी",
               style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),//खबर
             Text(
-              "लाइव",
+              "लाइव    ",
               style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
             )
           ],
