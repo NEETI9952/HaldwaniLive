@@ -15,7 +15,7 @@ class ShowCategoryNews {
 
     jsonData.forEach((element){
       debugPrint('responsecategory: $element');
-      if(element["title"]!=null && element['content']!=null){
+      if(element["title"]!=null && element['link']!=null && element['content']!=null && element["_embedded"]["wp:featuredmedia"][0]["source_url"]!=null){
           SimpleArticleModel article= SimpleArticleModel(
               title: element["title"]["rendered"],//titleModel.rendered,
               description: element["content"]["rendered"],
@@ -25,17 +25,6 @@ class ShowCategoryNews {
           debugPrint('responsecategory: $article');
           categoriesNews.add(article);
       }
-        // if (element["urlToImage"] != null && element['description'] != null) {
-        //   ShowCategoryModel categoryModel = ShowCategoryModel(
-        //     title: element["title"],
-        //     description: element["description"],
-        //     url: element["url"],
-        //     urlToImage: element["urlToImage"],
-        //     content: element["content"],
-        //     author: element["author"],
-        //   );
-        //   categories.add(categoryModel);
-        // }
 
     });
 

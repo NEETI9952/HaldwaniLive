@@ -2,10 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:haldwani_live/models/simple_article_model.dart';
-import 'package:haldwani_live/models/slider_model.dart';
 import 'package:haldwani_live/pages/article_view.dart';
 import 'package:haldwani_live/services/news.dart';
-import 'package:haldwani_live/services/slider_data.dart';
 
 class AllNews extends StatefulWidget {
   String news;
@@ -16,10 +14,8 @@ class AllNews extends StatefulWidget {
 }
 
 class _AllNewsState extends State<AllNews> {
-  List<sliderModel> sliders = [];
   List<SimpleArticleModel> articles = [];
   void initState() {
-    getSlider();
     getNews();
     super.initState();
   }
@@ -33,14 +29,6 @@ class _AllNewsState extends State<AllNews> {
     });
   }
 
-  getSlider() async {
-    Sliders slider = Sliders();
-    await slider.getSlider();
-    sliders = slider.sliders;
-    setState(() {
-
-    });
-  }
 
   String removeHtmlTags(String htmlText) {
     RegExp exp = RegExp(r"<[^>]*>", multiLine: true, caseSensitive: true);
@@ -63,29 +51,19 @@ class _AllNewsState extends State<AllNews> {
         child: ListView.builder(
             shrinkWrap: true,
             physics: ClampingScrollPhysics(),
-            itemCount:
-            widget.news == "Breaking" ? sliders.length : articles.length,
+            itemCount: articles.length,
             itemBuilder: (context, index) {
               print(articles.length);
-              print(sliders.length);
               return AllNewsSection(
-                  Image: widget.news == "Breaking"
-                      ? sliders[index].urlToImage!
-                      : articles[index].urlToImage!,
-                  desc: widget.news == "Breaking"
-                      ? Html(data: sliders[index].description!)
-                      : Html(
+                  Image: articles[index].urlToImage!,
+                  desc: Html(
                     data: articles[index].description!
                         .split(' ')
                         .take(25)
                         .join(' '),
                             ),
-                  title: widget.news == "Breaking"
-                      ? sliders[index].title!
-                      : articles[index].title!,
-                  url: widget.news == "Breaking"
-                      ? sliders[index].url!
-                      : articles[index].link!);
+                  title: articles[index].title!,
+                  url: articles[index].link!);
             }),
       ),
     );
