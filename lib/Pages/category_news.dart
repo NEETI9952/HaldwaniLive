@@ -2,8 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:haldwani_live/models/simple_article_model.dart';
-import 'package:haldwani_live/pages/article_view.dart';
 import 'package:haldwani_live/services/show_category_news.dart';
+
+import 'article_view.dart';
 
 class CategoryNews extends StatefulWidget {
   int categoryId;
@@ -47,30 +48,34 @@ class _CategoryNewsState extends State<CategoryNews> {
         body: _loading
             ? const Center(child: CircularProgressIndicator())
             : Container(
-          margin: EdgeInsets.symmetric(horizontal: 10.0),
-          child: ListView.builder(
-              shrinkWrap: true,
-              physics: ClampingScrollPhysics(),
-              itemCount: categoriesNewsList.length,
-              itemBuilder: (context, index) {
-                return ShowCategory(
-                    Image: categoriesNewsList[index].urlToImage!,
-                    desc: Html(data: categoriesNewsList[index].description!
-                          .split(' ')
-                          .take(25)
-                          .join(' '),),
-                    title: categoriesNewsList[index].title!,
-                    url: categoriesNewsList[index].link!
-                );
-              }),
-        ));
+                margin: EdgeInsets.symmetric(horizontal: 10.0),
+                child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: ClampingScrollPhysics(),
+                    itemCount: categoriesNewsList.length,
+                    itemBuilder: (context, index) {
+                      return ShowCategory(
+                          Image: categoriesNewsList[index].urlToImage!,
+                          desc: categoriesNewsList[index].description!,
+                          // Html(data: categoriesNewsList[index].description!
+                          //       .split(' ')
+                          //       .take(25)
+                          //       .join(' '),),
+                          title: categoriesNewsList[index].title!,
+                          url: categoriesNewsList[index].link!);
+                    }),
+              ));
   }
 }
 
 class ShowCategory extends StatelessWidget {
-  String Image, title, url;
-  Widget desc;
-  ShowCategory({required this.Image, required this.desc, required this.title, required this.url});
+  String Image, title, url, desc;
+  // Widget desc;
+  ShowCategory(
+      {required this.Image,
+      required this.desc,
+      required this.title,
+      required this.url});
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +83,12 @@ class ShowCategory extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => ArticleView(blogUrl: url)),
+          MaterialPageRoute(
+              builder: (context) => ArticleView(
+                    title: title,
+                    imageUrl: Image,
+                    desc: desc,
+                  )),
         );
       },
       child: Container(
@@ -92,7 +102,8 @@ class ShowCategory extends StatelessWidget {
                 height: 200,
                 fit: BoxFit.cover,
                 errorWidget: (context, url, error) => Container(
-                  color: Color.fromRGBO(160, 160, 160, 1.0),  // light grey box as placeholder
+                  color: Color.fromRGBO(
+                      160, 160, 160, 1.0), // light grey box as placeholder
                   width: MediaQuery.of(context).size.width,
                   height: 200,
                 ),
@@ -110,7 +121,12 @@ class ShowCategory extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            desc,
+            Html(
+              data: desc.split(RegExp(r'\s+')).take(25).join(' '),
+              style: {
+                "*": Style(color: Colors.black54,fontWeight: FontWeight.normal,lineHeight: LineHeight.number(0)), // Set color to black for all elements
+              },
+            ),
             SizedBox(
               height: 20.0,
             ),
@@ -119,5 +135,4 @@ class ShowCategory extends StatelessWidget {
       ),
     );
   }
-
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:haldwani_live/Pages/home.dart';
+// import 'package:haldwani_live/Pages/home.dart';
 import 'package:haldwani_live/Pages/landing_page.dart';
 
 void main() {

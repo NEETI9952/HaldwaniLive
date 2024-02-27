@@ -2,8 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:haldwani_live/models/simple_article_model.dart';
-import 'package:haldwani_live/pages/article_view.dart';
 import 'package:haldwani_live/services/news.dart';
+
+import 'article_view.dart';
 
 class AllNews extends StatefulWidget {
   String news;
@@ -24,10 +25,8 @@ class _AllNewsState extends State<AllNews> {
     News newsclass = News();
     await newsclass.getNews();
     articles = newsclass.news;
-    setState(() {
-    });
+    setState(() {});
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -50,12 +49,7 @@ class _AllNewsState extends State<AllNews> {
               print(articles.length);
               return AllNewsSection(
                   Image: articles[index].urlToImage!,
-                  desc: Html(
-                    data: articles[index].description!
-                        .split(' ')
-                        .take(25)
-                        .join(' '),
-                            ),
+                  desc: articles[index].description!,
                   title: articles[index].title!,
                   url: articles[index].link!);
             }),
@@ -65,20 +59,25 @@ class _AllNewsState extends State<AllNews> {
 }
 
 class AllNewsSection extends StatelessWidget {
-  String Image,  title, url;
-  Widget desc; // Accepts a Widget instead of a String
+  String Image, title, url, desc;
+  // Widget desc; // Accepts a Widget instead of a String
   AllNewsSection(
       {required this.Image,
-        required this.desc,
-        required this.title,
-        required this.url});
+      required this.desc,
+      required this.title,
+      required this.url});
 
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => ArticleView(blogUrl: url)),
+          MaterialPageRoute(
+              builder: (context) => ArticleView(
+                    title: title,
+                    imageUrl: Image,
+                    desc: desc,
+                  )),
         );
       },
       child: Container(
@@ -92,7 +91,8 @@ class AllNewsSection extends StatelessWidget {
                 height: 200,
                 fit: BoxFit.cover,
                 errorWidget: (context, url, error) => Container(
-                  color: Color.fromRGBO(160, 160, 160, 1.0),  // light grey box as placeholder
+                  color: Color.fromRGBO(
+                      160, 160, 160, 1.0), // light grey box as placeholder
                   width: MediaQuery.of(context).size.width,
                   height: 200,
                 ),
@@ -110,7 +110,12 @@ class AllNewsSection extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            desc, // Display the description directly as a Widget
+            Html(
+              data: desc.split(RegExp(r'\s+')).take(25).join(' '),
+              style: {
+                "*": Style(color: Colors.black54,fontWeight: FontWeight.normal,lineHeight: LineHeight.number(0)), // Set color to black for all elements
+              },
+            ), // Display the description directly as a Widget
             const SizedBox(
               height: 20.0,
             ),
@@ -119,5 +124,4 @@ class AllNewsSection extends StatelessWidget {
       ),
     );
   }
-
 }

@@ -19,7 +19,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   List<CategoryModel> categories = [];
   List<SimpleArticleModel> articles = [];
-  bool _loading = true, loading2=true, _loading3=true;
+  bool _loading = true, loading2 = true, _loading3 = true;
 
   int activeIndex = 0;
   @override
@@ -63,8 +63,11 @@ class _HomeState extends State<Home> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("हल्द्वानी",
-              style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),//खबर
+            Text(
+              "हल्द्वानी",
+              style:
+                  TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            ), //खबर
             Text(
               "लाइव    ",
               style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
@@ -77,94 +80,95 @@ class _HomeState extends State<Home> {
       body: _loading3
           ? Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
-        child: Container(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                margin: EdgeInsets.only(left: 10.0),
-                height: 80,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemCount: categories.length,
-                  itemBuilder: (context, index) {
-                    return CategoryTile(
-                      image: categories[index].image,
-                      categoryName: categories[index].categoryName,
-                      id: categories[index].id,
-                    );
-                  },
-                ),
-              ),
-              SizedBox(height: 30.0),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "लेटेस्ट न्यूज़!",//ब्रेकिंग न्यूज़ · समाचार तोड़ · ताज़ा ख़बर
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18.0,
-                        fontFamily: 'Pacifico',
+                    Container(
+                      margin: EdgeInsets.only(left: 10.0),
+                      height: 80,
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: categories.length,
+                        itemBuilder: (context, index) {
+                          return CategoryTile(
+                            image: categories[index].image,
+                            categoryName: categories[index].categoryName,
+                            id: categories[index].id,
+                          );
+                        },
                       ),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => AllNews(news: "Trending"),
+                    SizedBox(height: 30.0),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "लेटेस्ट न्यूज़!", //ब्रेकिंग न्यूज़ · समाचार तोड़ · ताज़ा ख़बर
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18.0,
+                              fontFamily: 'Pacifico',
+                            ),
                           ),
-                        );
-                      },
-                      child: Text(
-                        "View All",
-                        style: TextStyle(
-                          decoration: TextDecoration.underline,
-                          decorationColor: Colors.blue,
-                          color: Colors.blue,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14.0,
-                        ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      AllNews(news: "Trending"),
+                                ),
+                              );
+                            },
+                            child: Text(
+                              "View All",
+                              style: TextStyle(
+                                decoration: TextDecoration.underline,
+                                decorationColor: Colors.blue,
+                                color: Colors.blue,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14.0,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
+                    SizedBox(height: 10.0),
+                    _loading
+                        ? Center(child: CircularProgressIndicator())
+                        : Container(
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              physics: ClampingScrollPhysics(),
+                              itemCount: articles.length,
+                              itemBuilder: (context, index) {
+                                return BlogTile(
+                                  url: articles[index].link!,
+                                  desc: articles[index].description!,
+                                  // Html(
+                                  //   data: articles[index].description!
+                                  //       .split(' ')
+                                  //       .take(10)
+                                  //       .join(' '),
+                                  // ),
+                                  imageUrl: articles[index].urlToImage!,
+                                  title: articles[index].title!,
+                                );
+                              },
+                            ),
+                          ),
                   ],
                 ),
               ),
-              SizedBox(height: 10.0),
-              _loading
-                  ? Center(child: CircularProgressIndicator())
-                  : Container(
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: ClampingScrollPhysics(),
-                  itemCount: articles.length,
-                  itemBuilder: (context, index) {
-                    return BlogTile(
-                      url: articles[index].link!,
-                      desc: Html(
-                        data: articles[index].description!
-                            .split(' ')
-                            .take(10)
-                            .join(' '),
-                      ),
-                      imageUrl: articles[index].urlToImage!,
-                      title: articles[index].title!,
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+            ),
     );
   }
-
 }
 
 class CategoryTile extends StatelessWidget {
@@ -174,8 +178,12 @@ class CategoryTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> CategoryNews(categoryId:id,name: categoryName)));
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    CategoryNews(categoryId: id, name: categoryName)));
       },
       child: Container(
         margin: const EdgeInsets.only(right: 16),
@@ -188,7 +196,6 @@ class CategoryTile extends StatelessWidget {
                 width: 120,
                 height: 80,
                 fit: BoxFit.cover,
-
               ),
             ),
             Container(
@@ -200,13 +207,13 @@ class CategoryTile extends StatelessWidget {
               ),
               child: Center(
                   child: Text(
-                    categoryName,
-                    style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                    ),
-                  )),
+                categoryName,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                ),
+              )),
             )
           ],
         ),
@@ -216,16 +223,27 @@ class CategoryTile extends StatelessWidget {
 }
 
 class BlogTile extends StatelessWidget {
-  String imageUrl, title, url;
-  Widget desc;
+  String imageUrl, title, url, desc;
+  // Widget desc;
 
-  BlogTile({required this.desc, required this.imageUrl, required this.title, required this.url});
+  BlogTile(
+      {required this.desc,
+      required this.imageUrl,
+      required this.title,
+      required this.url});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => ArticleView(blogUrl: url)));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ArticleView(
+                      title: title,
+                      imageUrl: imageUrl,
+                      desc: desc,
+                    )));
       },
       child: Container(
         margin: EdgeInsets.only(bottom: 10.0),
@@ -235,7 +253,8 @@ class BlogTile extends StatelessWidget {
             elevation: 3.0,
             borderRadius: BorderRadius.circular(10),
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -248,7 +267,8 @@ class BlogTile extends StatelessWidget {
                         width: 120,
                         fit: BoxFit.cover,
                         errorWidget: (context, url, error) => Container(
-                          color: Color.fromRGBO(160, 160, 160, 1.0), // Medium grey color as placeholder
+                          color: Color.fromRGBO(160, 160, 160,
+                              1.0), // Medium grey color as placeholder
                           height: 140,
                           width: 120,
                         ),
@@ -277,7 +297,12 @@ class BlogTile extends StatelessWidget {
                       ),
                       Container(
                         width: MediaQuery.of(context).size.width / 1.7,
-                        child: desc,
+                        child: Html(
+                          data: desc.split(RegExp(r'\s+')).take(10).join(' '),
+                          style: {
+                            "*": Style(color: Colors.black54,fontWeight: FontWeight.normal,lineHeight: LineHeight.number(0)), // Set color to black for all elements
+                          },
+                        ),
                       ),
                     ],
                   ),

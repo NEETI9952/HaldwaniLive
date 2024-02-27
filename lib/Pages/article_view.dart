@@ -1,18 +1,16 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+import 'package:flutter_html/flutter_html.dart';
+// import 'package:webview_flutter/webview_flutter.dart';
 
-class ArticleView extends StatefulWidget {
-  final String blogUrl;
+class ArticleView extends StatelessWidget{
+  final String imageUrl,  title, desc;
+  // Widget desc; // Accepts a Widget instead of a String
 
-  ArticleView({required
-  this.blogUrl});
-
-  @override
-  State<ArticleView> createState() => _ArticleViewState();
-}
-
-class _ArticleViewState extends State<ArticleView> {
-  bool _isLoading = true;
+  ArticleView({required this.imageUrl,
+    required this.desc,
+    required this.title,
+    });
 
   @override
   Widget build(BuildContext context) {
@@ -32,30 +30,38 @@ class _ArticleViewState extends State<ArticleView> {
         centerTitle: true,
         elevation: 0.0,
       ),
-      body: Stack(
-        children: [
-          WebView(
-            initialUrl: widget.blogUrl,
-            javascriptMode: JavascriptMode.unrestricted,
-            onPageFinished: (_) {
-              setState(() {
-                _isLoading = false;
-              });
-            },
-            onPageStarted: (_) {
-              setState(() {
-                _isLoading = true;
-              });
-            },
-            onWebResourceError: (error) {
-              // Handle web resource errors
-            },
-          ),
-          if (_isLoading)
-            Center(
-              child: CircularProgressIndicator(),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(
+                title,
+                style: TextStyle(
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
-        ],
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: CachedNetworkImage(
+                imageUrl: imageUrl,
+                width: MediaQuery.of(context).size.width,
+                height: 200,
+                fit: BoxFit.cover,
+                errorWidget: (context, url, error) => Container(
+                  color: Color.fromRGBO(160, 160, 160, 1.0),  // light grey box as placeholder
+                  width: MediaQuery.of(context).size.width,
+                  height: 200,
+                ),
+              ),
+            ),
+            // desc,
+            Html(data: desc),
+          ],
+        ),
       ),
     );
   }

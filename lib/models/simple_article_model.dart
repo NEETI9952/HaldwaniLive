@@ -9,4 +9,5 @@ class SimpleArticleModel {
   // String? urlToImage;
 
   SimpleArticleModel({this.title, this.description, this.link, this.urlToImage});
+
 }
