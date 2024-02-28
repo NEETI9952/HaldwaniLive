@@ -6,14 +6,12 @@ import 'package:http/http.dart' as http;
 class CategoryTypes{
   List<CategoryModel> categories = [];
 
-
   Future<void> getCategories()async {
     String url = "https://haldwanilive.com/wp-json/wp/v2/categories?per_page=100";
     var response = await http.get(Uri.parse(url));
 
     var jsonData = jsonDecode(response.body);
     debugPrint('responseneeti: $jsonData');
-
 
     jsonData.forEach((element) {
       debugPrint('responseneeti: $element');

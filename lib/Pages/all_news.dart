@@ -33,7 +33,7 @@ class _AllNewsState extends State<AllNews> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "लेटेस्ट न्यूज़    ",
+          "Latest News   ",
           style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
@@ -51,7 +51,9 @@ class _AllNewsState extends State<AllNews> {
                   Image: articles[index].urlToImage!,
                   desc: articles[index].description!,
                   title: articles[index].title!,
-                  url: articles[index].link!);
+                  url: articles[index].link!,
+                  author: articles[index].author!,
+                  lastModifiedDate: articles[index].lastModifiedDate!);
             }),
       ),
     );
@@ -59,12 +61,14 @@ class _AllNewsState extends State<AllNews> {
 }
 
 class AllNewsSection extends StatelessWidget {
-  String Image, title, url, desc;
+  String Image, title, url, desc, author, lastModifiedDate;
   // Widget desc; // Accepts a Widget instead of a String
   AllNewsSection(
       {required this.Image,
       required this.desc,
       required this.title,
+      required this.author,
+      required this.lastModifiedDate,
       required this.url});
 
   Widget build(BuildContext context) {
@@ -77,6 +81,8 @@ class AllNewsSection extends StatelessWidget {
                     title: title,
                     imageUrl: Image,
                     desc: desc,
+                    lastModified: lastModifiedDate,
+                    author: author,
                   )),
         );
       },
@@ -113,7 +119,11 @@ class AllNewsSection extends StatelessWidget {
             Html(
               data: desc.split(RegExp(r'\s+')).take(25).join(' '),
               style: {
-                "*": Style(color: Colors.black54,fontWeight: FontWeight.normal,lineHeight: LineHeight.number(0)), // Set color to black for all elements
+                "*": Style(
+                    color: Colors.black54,
+                    fontWeight: FontWeight.normal,
+                    lineHeight: LineHeight.number(
+                        0)), // Set color to black for all elements
               },
             ), // Display the description directly as a Widget
             const SizedBox(

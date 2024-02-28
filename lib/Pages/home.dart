@@ -52,26 +52,27 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: SizedBox(
-          height: 40, // Adjust the height as needed
-          width: 40, // Adjust the width as needed
-          child: Image.asset(
-            "images/logo.jpg", // Replace 'your_image.png' with your actual image path
-            fit: BoxFit.contain, // Ensure the image fits within the constraints
-          ),
-        ),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              "हल्द्वानी",
-              style:
-                  TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-            ), //खबर
-            Text(
-              "लाइव    ",
-              style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
-            )
+            SizedBox(
+              height: 50, // Adjust the height as needed
+              width: 80, // Adjust the width as needed
+              child: Image.asset(
+                "images/logo.jpg", // Replace 'your_image.png' with your actual image path
+                fit: BoxFit
+                    .contain, // Ensure the image fits within the constraints
+              ),
+            ),
+            // Text(
+            //   "हल्द्वानी",
+            //   style:
+            //       TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            // ), //खबर
+            // Text(
+            //   "लाइव    ",
+            //   style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+            // )
           ],
         ),
         centerTitle: true,
@@ -107,7 +108,7 @@ class _HomeState extends State<Home> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "लेटेस्ट न्यूज़!", //ब्रेकिंग न्यूज़ · समाचार तोड़ · ताज़ा ख़बर
+                            "Latest News!", //ब्रेकिंग न्यूज़ · समाचार तोड़ · ताज़ा ख़बर
                             style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
@@ -149,17 +150,19 @@ class _HomeState extends State<Home> {
                               itemCount: articles.length,
                               itemBuilder: (context, index) {
                                 return BlogTile(
-                                  url: articles[index].link!,
-                                  desc: articles[index].description!,
-                                  // Html(
-                                  //   data: articles[index].description!
-                                  //       .split(' ')
-                                  //       .take(10)
-                                  //       .join(' '),
-                                  // ),
-                                  imageUrl: articles[index].urlToImage!,
-                                  title: articles[index].title!,
-                                );
+                                    url: articles[index].link!,
+                                    desc: articles[index].description!,
+                                    // Html(
+                                    //   data: articles[index].description!
+                                    //       .split(' ')
+                                    //       .take(10)
+                                    //       .join(' '),
+                                    // ),
+                                    imageUrl: articles[index].urlToImage!,
+                                    title: articles[index].title!,
+                                    author: articles[index].author!,
+                                    lastModifiedDate:
+                                        articles[index].lastModifiedDate!);
                               },
                             ),
                           ),
@@ -223,14 +226,16 @@ class CategoryTile extends StatelessWidget {
 }
 
 class BlogTile extends StatelessWidget {
-  String imageUrl, title, url, desc;
+  String imageUrl, title, url, desc, author, lastModifiedDate;
   // Widget desc;
 
   BlogTile(
       {required this.desc,
       required this.imageUrl,
       required this.title,
-      required this.url});
+      required this.url,
+      required this.lastModifiedDate,
+      required this.author});
 
   @override
   Widget build(BuildContext context) {
@@ -243,6 +248,8 @@ class BlogTile extends StatelessWidget {
                       title: title,
                       imageUrl: imageUrl,
                       desc: desc,
+                      lastModified: lastModifiedDate,
+                      author: author,
                     )));
       },
       child: Container(
@@ -300,7 +307,11 @@ class BlogTile extends StatelessWidget {
                         child: Html(
                           data: desc.split(RegExp(r'\s+')).take(10).join(' '),
                           style: {
-                            "*": Style(color: Colors.black54,fontWeight: FontWeight.normal,lineHeight: LineHeight.number(0)), // Set color to black for all elements
+                            "*": Style(
+                                color: Colors.black54,
+                                fontWeight: FontWeight.normal,
+                                lineHeight: LineHeight.number(
+                                    0)), // Set color to black for all elements
                           },
                         ),
                       ),

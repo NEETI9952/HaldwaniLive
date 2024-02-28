@@ -62,20 +62,25 @@ class _CategoryNewsState extends State<CategoryNews> {
                           //       .take(25)
                           //       .join(' '),),
                           title: categoriesNewsList[index].title!,
-                          url: categoriesNewsList[index].link!);
+                          url: categoriesNewsList[index].link!,
+                          author: categoriesNewsList[index].author!,
+                          lastModifiedDate:
+                              categoriesNewsList[index].lastModifiedDate!);
                     }),
               ));
   }
 }
 
 class ShowCategory extends StatelessWidget {
-  String Image, title, url, desc;
+  String Image, title, url, desc, lastModifiedDate, author;
   // Widget desc;
   ShowCategory(
       {required this.Image,
       required this.desc,
       required this.title,
-      required this.url});
+      required this.url,
+      required this.lastModifiedDate,
+      required this.author});
 
   @override
   Widget build(BuildContext context) {
@@ -85,10 +90,11 @@ class ShowCategory extends StatelessWidget {
           context,
           MaterialPageRoute(
               builder: (context) => ArticleView(
-                    title: title,
-                    imageUrl: Image,
-                    desc: desc,
-                  )),
+                  title: title,
+                  imageUrl: Image,
+                  desc: desc,
+                  author: author,
+                  lastModified: lastModifiedDate)),
         );
       },
       child: Container(
@@ -124,7 +130,11 @@ class ShowCategory extends StatelessWidget {
             Html(
               data: desc.split(RegExp(r'\s+')).take(25).join(' '),
               style: {
-                "*": Style(color: Colors.black54,fontWeight: FontWeight.normal,lineHeight: LineHeight.number(0)), // Set color to black for all elements
+                "*": Style(
+                    color: Colors.black54,
+                    fontWeight: FontWeight.normal,
+                    lineHeight: LineHeight.number(
+                        0)), // Set color to black for all elements
               },
             ),
             SizedBox(
