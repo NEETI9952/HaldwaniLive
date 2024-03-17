@@ -49,7 +49,7 @@ class ArticleView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Padding(
-              padding: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 4),
+              padding: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 2),
               child: Text(
                 title,
                 style: TextStyle(

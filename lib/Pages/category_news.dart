@@ -128,11 +128,12 @@ class ShowCategory extends StatelessWidget {
               ),
             ),
             Html(
-              data: desc.split(RegExp(r'\s+')).take(25).join(' '),
+              data: '<p>${desc.split(RegExp(r'\s+')).take(35).join(' ').replaceAll('\n', '').replaceAll('\t', '')}...</p>',
               style: {
                 "*": Style(
                     color: Colors.black54,
                     fontWeight: FontWeight.normal,
+                    fontSize: FontSize(13.0),
                     lineHeight: LineHeight.number(
                         0)), // Set color to black for all elements
               },

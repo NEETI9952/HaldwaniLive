@@ -17,9 +17,9 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List<CategoryModel> categories = [];
+  // List<CategoryModel> categories = [];
   List<SimpleArticleModel> articles = [];
-  bool _loading = true, loading2 = true, _loading3 = true;
+  bool _loading = true, loading2 = true;
 
   int activeIndex = 0;
   @override
@@ -30,14 +30,17 @@ class _HomeState extends State<Home> {
     super.initState();
   }
 
-  getCategories() async {
-    CategoryTypes categoryTypes = CategoryTypes();
-    await categoryTypes.getCategories();
-    categories = categoryTypes.categories;
-    setState(() {
-      _loading3 = false;
-    });
-  }
+  // getCategories() async {
+  //   CategoryTypes categoryTypes = CategoryTypes();
+  //   await categoryTypes.getCategories();
+  //   categories = categoryTypes.categories;
+  //   setState(() {
+  //     _loading3 = false;
+  //   });
+  // }
+
+  List<CategoryModel> categories =getCategories();
+
 
   getNews() async {
     News newsclass = News();
@@ -57,7 +60,7 @@ class _HomeState extends State<Home> {
           children: [
             SizedBox(
               height: 50, // Adjust the height as needed
-              width: 80, // Adjust the width as needed
+              width: 100, // Adjust the width as needed
               child: Image.asset(
                 "images/logo.jpg", // Replace 'your_image.png' with your actual image path
                 fit: BoxFit
@@ -78,9 +81,7 @@ class _HomeState extends State<Home> {
         centerTitle: true,
         elevation: 0.0,
       ),
-      body: _loading3
-          ? Center(child: CircularProgressIndicator())
-          : SingleChildScrollView(
+      body: SingleChildScrollView(
               child: Container(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -94,7 +95,6 @@ class _HomeState extends State<Home> {
                         itemCount: categories.length,
                         itemBuilder: (context, index) {
                           return CategoryTile(
-                            image: categories[index].image,
                             categoryName: categories[index].categoryName,
                             id: categories[index].id,
                           );
@@ -175,8 +175,8 @@ class _HomeState extends State<Home> {
 }
 
 class CategoryTile extends StatelessWidget {
-  final image, categoryName, id;
-  CategoryTile({this.categoryName, this.image, this.id});
+  final categoryName, id;
+  CategoryTile({this.categoryName,  this.id});
 
   @override
   Widget build(BuildContext context) {
@@ -191,32 +191,34 @@ class CategoryTile extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.only(right: 16),
         child: Stack(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(6),
-              child: Image.asset(
-                image,
-                width: 120,
-                height: 80,
-                fit: BoxFit.cover,
-              ),
-            ),
+          children: <Widget>[
             Container(
               width: 120,
               height: 80,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(6),
-                color: Colors.black38,
-              ),
-              child: Center(
-                  child: Text(
-                categoryName,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
+                gradient: LinearGradient(
+                  colors: [Color(0xFFb31217), Color(0xFFEC3237), Colors.white,], //#D8B5FF → #1EAE98 #c0392b-.#8e44ad #b31217
+                  begin: Alignment.topLeft, // Define the start point of the gradient
+                  end: Alignment.bottomRight, // Define the end point of the gradient
+                  // You can also set stops to control the distribution of colors
+                  // stops: [0.0, 0.5, 1.0],
+                  // tileMode: TileMode.clamp, // Define how the gradient should fill the container
                 ),
-              )),
+              ),
+              child: Container(
+                margin: EdgeInsets.only(left: 6,right: 6),
+                child: Center(
+                    child: Text(
+                      categoryName,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    )),
+              ),
             )
           ],
         ),
@@ -226,7 +228,7 @@ class CategoryTile extends StatelessWidget {
 }
 
 class BlogTile extends StatelessWidget {
-  String imageUrl, title, url, desc, author, lastModifiedDate;
+  final String imageUrl, title, url, desc, author, lastModifiedDate;
   // Widget desc;
 
   BlogTile(
@@ -242,17 +244,20 @@ class BlogTile extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => ArticleView(
-                      title: title,
-                      imageUrl: imageUrl,
-                      desc: desc,
-                      lastModified: lastModifiedDate,
-                      author: author,
-                    )));
+          context,
+          MaterialPageRoute(
+            builder: (context) => ArticleView(
+              title: title,
+              imageUrl: imageUrl,
+              desc: desc,
+              lastModified: lastModifiedDate,
+              author: author,
+            ),
+          ),
+        );
       },
       child: Container(
+        height: 160,
         margin: EdgeInsets.only(bottom: 10.0),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -260,62 +265,66 @@ class BlogTile extends StatelessWidget {
             elevation: 3.0,
             borderRadius: BorderRadius.circular(10),
             child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
+              padding: const EdgeInsets.symmetric(vertical: 1, horizontal: 5),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: CachedNetworkImage(
-                        imageUrl: imageUrl,
-                        height: 140,
-                        width: 120,
-                        fit: BoxFit.cover,
-                        errorWidget: (context, url, error) => Container(
-                          color: Color.fromRGBO(160, 160, 160,
-                              1.0), // Medium grey color as placeholder
-                          height: 140,
+                  Padding(
+                    padding: const EdgeInsets.only(left:5,top:10,right:10,bottom:10), // Add padding here
+                    child: Container(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: CachedNetworkImage(
+                          imageUrl: imageUrl,
+                          height: 150,
                           width: 120,
+                          fit: BoxFit.cover,
+                          errorWidget: (context, url, error) => Container(
+                            color: Color.fromRGBO(160, 160, 160, 1.0),
+                            height: 140,
+                            width: 120,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    width: 8.0,
-                  ),
-                  Column(
-                    children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width / 1.7,
-                        child: Text(
-                          title,
-                          maxLines: 2,
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 17.0,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(
+                          height: 4.0,
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(top: 10.0),
+                          child: Text(
+                            title,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 17.0,
+                            ),
                           ),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 7.0,
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width / 1.7,
-                        child: Html(
-                          data: desc.split(RegExp(r'\s+')).take(10).join(' '),
-                          style: {
-                            "*": Style(
-                                color: Colors.black54,
-                                fontWeight: FontWeight.normal,
-                                lineHeight: LineHeight.number(
-                                    0)), // Set color to black for all elements
-                          },
+                        Expanded(
+                          child: Container(
+                            child: Html(
+                              data: '${(desc.split(RegExp('<p>')).take(2).join(' ')).split(RegExp(r'\s+')).take(11).join(' ').replaceAll('\n', '').replaceAll('\t', '')}...',
+                              style: {
+                                "*": Style(
+                                  color: Colors.black54,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: FontSize(13.0),
+                                  lineHeight: LineHeight.number(0),
+                                ),
+                              },
+                            ),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -325,4 +334,7 @@ class BlogTile extends StatelessWidget {
       ),
     );
   }
+
+
+
 }
