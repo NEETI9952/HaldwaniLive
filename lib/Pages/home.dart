@@ -58,24 +58,15 @@ class _HomeState extends State<Home> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(
-              height: 50, // Adjust the height as needed
-              width: 100, // Adjust the width as needed
-              child: Image.asset(
-                "images/logo.jpg", // Replace 'your_image.png' with your actual image path
-                fit: BoxFit
-                    .contain, // Ensure the image fits within the constraints
-              ),
-            ),
-            // Text(
-            //   "हल्द्वानी",
-            //   style:
-            //       TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-            // ), //खबर
-            // Text(
-            //   "लाइव    ",
-            //   style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
-            // )
+            Text(
+              "Khabar",
+              style:
+                  TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            ), //खबर
+            Text(
+              "पहाड़    ",
+              style: TextStyle(color: Color(0xFFB0DAB9), fontWeight: FontWeight.bold),
+            )
           ],
         ),
         centerTitle: true,
@@ -198,7 +189,7 @@ class CategoryTile extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(6),
                 gradient: LinearGradient(
-                  colors: [Color(0xFFb31217), Color(0xFFEC3237), Colors.white,], //#D8B5FF → #1EAE98 #c0392b-.#8e44ad #b31217
+                  colors: [Color(0xFFDAD299), Color(0xFFB0DAB9)], //#D8B5FF → #1EAE98 #c0392b-.#8e44ad #b31217
                   begin: Alignment.topLeft, // Define the start point of the gradient
                   end: Alignment.bottomRight, // Define the end point of the gradient
                   // You can also set stops to control the distribution of colors

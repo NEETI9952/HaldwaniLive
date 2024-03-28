@@ -10,7 +10,7 @@ class News{
 
 
   Future<void> getNews()async{
-    String url="https://haldwanilive.com/wp-json/wp/v2/posts?_embed";
+    String url="https://khabarpahad.com/wp-json/wp/v2/posts?_embed";
     var response= await http.get(Uri.parse(url));
 
     var jsonData= jsonDecode(response.body);

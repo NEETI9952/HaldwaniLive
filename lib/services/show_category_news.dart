@@ -7,7 +7,7 @@ class ShowCategoryNews {
   List<SimpleArticleModel> categoriesNews = [];
 
   Future<void> getCategoriesNews(int categoryId) async {
-    String url ="https://haldwanilive.com/wp-json/wp/v2/posts?_embed&categories=${categoryId}";
+    String url ="https://khabarpahad.com/wp-json/wp/v2/posts?_embed&categories=${categoryId}";
     var response = await http.get(Uri.parse(url));
 
     var jsonData = jsonDecode(response.body);
